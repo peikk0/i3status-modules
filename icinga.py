@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from time import time
 import requests
 from requests.auth import HTTPBasicAuth
@@ -12,14 +11,21 @@ class Py3status:
     """
     # available configuration parameters
     cache_timeout = 60
-    format = 'Unknown: {unknown} | Critical: {critical} | Warning: {warning} | OK: {ok}'
-    cred = ('user', 'password')
+    base_url = ''
+    disable_acknowledge = False
+    url_parameters = "?service_state={service_state}&format=json"
+    user = ''
+    password = ''
+    ca = True
 
     def unknown(self, i3s_output_list, i3s_config):
         format = 'Unknown: {unknown}'
+        service_state = 3
+        if self.disable_acknowledge:
+            self.url_parameters = self.url_parameters + "&service_handled=0"
         unknown = requests.get(
-            "https://monitoring.benoswald.de/icingaweb2/monitoring/list/services?service_state=3&format=json",
-            auth=self.cred, verify="/home/nazco/pki/ca.crt")
+            self.base_url + self.url_parameters.format(service_state=service_state),
+            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#cc77ff',
             'cached_until': time() + self.cache_timeout,
@@ -29,9 +35,12 @@ class Py3status:
 
     def critical(self, i3s_output_list, i3s_config):
         format = 'Critical: {critical}'
+        service_state = 2
+        if self.disable_acknowledge:
+            self.url_parameters = self.url_parameters + "&service_handled=0"
         critical = requests.get(
-            "https://monitoring.benoswald.de/icingaweb2/monitoring/list/services?service_state=2&format=json",
-            auth=self.cred, verify="/home/nazco/pki/ca.crt")
+            self.base_url + self.url_parameters.format(service_state=service_state),
+            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#ff5566',
             'cached_until': time() + self.cache_timeout,
@@ -41,9 +50,12 @@ class Py3status:
 
     def warning(self, i3s_output_list, i3s_config):
         format = 'Warning: {warning}'
+        service_state = 1
+        if self.disable_acknowledge:
+            self.url_parameters = self.url_parameters + "&service_handled=0"
         warning = requests.get(
-            "https://monitoring.benoswald.de/icingaweb2/monitoring/list/services?service_state=1&format=json",
-            auth=self.cred, verify="/home/nazco/pki/ca.crt")
+            self.base_url + self.url_parameters.format(service_state=service_state),
+            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#ffaa44',
             'cached_until': time() + self.cache_timeout,
@@ -53,9 +65,12 @@ class Py3status:
 
     def ok(self, i3s_output_list, i3s_config):
         format = 'OK: {ok}'
+        service_state = 0
+        if self.disable_acknowledge:
+            self.url_parameters = self.url_parameters + "&service_handled=0"
         ok = requests.get(
-            "https://monitoring.benoswald.de/icingaweb2/monitoring/list/services?service_state=0&format=json",
-            auth=self.cred, verify="/home/nazco/pki/ca.crt")
+            self.base_url + self.url_parameters.format(service_state=service_state),
+            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#44bb77',
             'cached_until': time() + self.cache_timeout,
@@ -71,4 +86,4 @@ if __name__ == "__main__":
         'color_degraded': '#FFFF00',
         'color_good': '#00FF00'
     }
-    print(x.unknown("bar", "baz"))
+    print(x.warning("bar", "bazddddddddddddddddddddddddddddddddddddddddddddd"))
