@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
+"""
+Display Icinga2 service status informations
 
+Configuration Parameters:
+    - cache_timeout: how often the data should be updated
+    - base_url: the base url to the icinga-web2 services list
+    - disable_acknowledge: enable or disable counting of acknowledged service problems
+    - user: username to authenticate against the icinga-web2 interface
+    - password: password to authenticate against the icinga-web2 interface
+
+@author Ben Oswald <ben.oswald@root-space.de>
+@license MIT License <https://opensource.org/licenses/MIT>
+"""
 from time import time
 import requests
 from requests.auth import HTTPBasicAuth
