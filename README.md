@@ -12,7 +12,7 @@ icinga {
     user = "icingauser"
     password = "secretpassword"
 	# If you use your own CA for the Icinga SSL Cert you can define it here to prevent errors
-    ca = "/home/nazco/pki/ca.crt"
+    ca = "/path/to/pki/ca.crt"
 }
 ```
 A screenshot of the plugin output:
