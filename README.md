@@ -17,3 +17,8 @@ icinga {
 ```
 A screenshot of the plugin output:
 ![](http://files.benoswald.de/Screenshot2016-01-12_13-31-49.png)
+
+### Older icinga web interface versions
+Currently only icinga-web2 is supported by this script (you realy want to upgrade to icinga2 and icinga-web2!).
+If you want support for older icinga interfaces like icinga-classic and icinga-web you have to wait, or change the hard coded
+URL parameter strings.
