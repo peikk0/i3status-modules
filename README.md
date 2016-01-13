@@ -41,11 +41,9 @@ for a working TLS verification with SNI.
 ## icinga_simple.py
 This module is a more flexible version of the icinga.py module.
 With this module for example you are able to check only one status type.
-You are able to reorder the status output, define the output format and you are able to define your own colors.
+You are able to reorder the status output and you are able to define your own colors.
 But this has some costs, you have to define all the config stuff redundant at your i3status.conf.
 Additionaly you have to add the two config parameters status and format.
-
-format is simply a format string like this: `format = "CRITICAL: %d`
 
 status is one of this four values:
 
