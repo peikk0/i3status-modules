@@ -11,6 +11,7 @@ Configuration Parameters:
 
 @author Ben Oswald <ben.oswald@root-space.de>
 @license MIT License <https://opensource.org/licenses/MIT>
+@source https://github.com/nazco/i3status-modules
 """
 from time import time
 from enum import Enum
