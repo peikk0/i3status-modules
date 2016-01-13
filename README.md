@@ -15,6 +15,11 @@ icinga {
     ca = "/path/to/pki/ca.crt"
 }
 ```
+You also have to define the module directory within the py3status call with the -i parameter, so it looks for example like:
+```
+py3status -c ~/.i3status.conf -i /pat/to/modules/folder/i3status-modules
+```
+
 A screenshot of the plugin output:
 ![](http://files.benoswald.de/Screenshot2016-01-12_13-31-49.png)
 
