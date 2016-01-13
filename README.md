@@ -1,7 +1,7 @@
 # i3status Modules
 This repository contains my py3status modules.
 
-## Icinga
+## Icinga.py
 This is a module showing a status overview for your services (Critical, Unknown, Warning and OK)
 
 You have to configure it with the help of a config section in your i3status.conf.
@@ -35,3 +35,21 @@ URL parameter strings.
 If you want to run it with python < 3.4 you have to remove the enum and
 if you run it under python 2 you may need pyopenssl, ndg-httpsclient and py-asn1
 for a working TLS verification with SNI.
+
+----
+
+## icinga_simple.py
+This module is a more flexible version of the icinga.py module.
+With this module for example you are able to check only one status type.
+You are able to reorder the status output, define the output format and you are able to define your own colors.
+But this has some costs, you have to define all the config stuff redundant at your i3status.conf.
+Additionaly you have to add the two config parameters status and format.
+
+format is simply a format string like this: `format = "CRITICAL: %d`
+
+status is one of this four values:
+
+ - OK = 0
+ - WARNING = 1
+ - CRITICAL = 2
+ - UNKNOWN = 3
