@@ -1,8 +1,8 @@
 # i3status Modules
-This repository contains my own py3status plugins.
+This repository contains my py3status modules.
 
 ## Icinga
-This is a plugin showing a status overview for my services (Critical, Unknown, Warning and OK)
+This is a module showing a status overview for your services (Critical, Unknown, Warning and OK)
 
 You have to configure it with the help of a config section in your i3status.conf.
 ```
@@ -19,6 +19,6 @@ A screenshot of the plugin output:
 ![](http://files.benoswald.de/Screenshot2016-01-12_13-31-49.png)
 
 ### Older icinga web interface versions
-Currently only icinga-web2 is supported by this script (you realy want to upgrade to icinga2 and icinga-web2!).
-If you want support for older icinga interfaces like icinga-classic and icinga-web you have to wait, or change the hard coded
+Currently only icinga-web2 is supported by this module (you realy want to upgrade to icinga2 and icinga-web2!).
+If you want support for older icinga interfaces like icinga-classic and icinga-web you have to wait or change the hard coded
 URL parameter strings.
