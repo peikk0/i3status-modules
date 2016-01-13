@@ -13,9 +13,15 @@ Configuration Parameters:
 @license MIT License <https://opensource.org/licenses/MIT>
 """
 from time import time
+from enum import Enum
 import requests
-from requests.auth import HTTPBasicAuth
-import json
+
+
+class Status(Enum):
+    OK = 0
+    WARNING = 1
+    CRITICAL = 2
+    UNKNOWN = 3
 
 
 class Py3status:
@@ -32,64 +38,47 @@ class Py3status:
 
     def unknown(self, i3s_output_list, i3s_config):
         format = 'Unknown: {unknown}'
-        service_state = 3
-        if self.disable_acknowledge:
-            self.url_parameters = self.url_parameters + "&service_handled=0"
-        unknown = requests.get(
-            self.base_url + self.url_parameters.format(service_state=service_state),
-            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#cc77ff',
             'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(unknown=len(unknown.json()))
+            'full_text': format.format(unknown=self._queryServiceCount(Status.UNKNOWN))
         }
         return response
 
     def critical(self, i3s_output_list, i3s_config):
         format = 'Critical: {critical}'
-        service_state = 2
-        if self.disable_acknowledge:
-            self.url_parameters = self.url_parameters + "&service_handled=0"
-        critical = requests.get(
-            self.base_url + self.url_parameters.format(service_state=service_state),
-            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#ff5566',
             'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(critical=len(critical.json()))
+            'full_text': format.format(critical=self._queryServiceCount(Status.CRITICAL))
         }
         return response
 
     def warning(self, i3s_output_list, i3s_config):
         format = 'Warning: {warning}'
-        service_state = 1
-        if self.disable_acknowledge:
-            self.url_parameters = self.url_parameters + "&service_handled=0"
-        warning = requests.get(
-            self.base_url + self.url_parameters.format(service_state=service_state),
-            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#ffaa44',
             'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(warning=len(warning.json()))
+            'full_text': format.format(warning=self._queryServiceCount(Status.WARNING))
         }
         return response
 
     def ok(self, i3s_output_list, i3s_config):
         format = 'OK: {ok}'
-        service_state = 0
-        if self.disable_acknowledge:
-            self.url_parameters = self.url_parameters + "&service_handled=0"
-        ok = requests.get(
-            self.base_url + self.url_parameters.format(service_state=service_state),
-            auth=(self.user, self.password), verify=self.ca)
         response = {
             'color': '#44bb77',
             'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(ok=len(ok.json()))
+            'full_text': format.format(ok=self._queryServiceCount(Status.OK))
         }
         return response
 
+    def _queryServiceCount(self, state):
+        if self.disable_acknowledge:
+            self.url_parameters = self.url_parameters + "&service_handled=0"
+        result = requests.get(
+            self.base_url + self.url_parameters.format(service_state=state.value),
+            auth=(self.user, self.password), verify=self.ca)
+        return len(result.json())
 
 if __name__ == "__main__":
-	pass
+    pass
