@@ -27,3 +27,11 @@ A screenshot of the plugin output:
 Currently only icinga-web2 is supported by this module (you realy want to upgrade to icinga2 and icinga-web2!).
 If you want support for older icinga interfaces like icinga-classic and icinga-web you have to wait or change the hard coded
 URL parameter strings.
+
+### Dependencies
+- Python 3.4 (due to Enums)
+- requests
+
+If you want to run it with python < 3.4 you have to remove the enum and
+if you run it under python 2 you may need pyopenssl, ndg-httpsclient and py-asn1
+for a working TLS verification with SNI.
