@@ -38,42 +38,26 @@ class Py3status:
     ca = True
 
     def unknown(self, i3s_output_list, i3s_config):
-        format = 'Unknown: {unknown}'
-        response = {
-            'color': '#cc77ff',
-            'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(unknown=self._queryServiceCount(Status.UNKNOWN))
-        }
-        return response
+        return self._get_response(Status.UNKNOWN, 'Unknown: {count}', '#cc77ff')
 
     def critical(self, i3s_output_list, i3s_config):
-        format = 'Critical: {critical}'
-        response = {
-            'color': '#ff5566',
-            'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(critical=self._queryServiceCount(Status.CRITICAL))
-        }
-        return response
+        return self._get_response(Status.CRITICAL, 'Critical: {count}', '#ff5566')
 
     def warning(self, i3s_output_list, i3s_config):
-        format = 'Warning: {warning}'
-        response = {
-            'color': '#ffaa44',
-            'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(warning=self._queryServiceCount(Status.WARNING))
-        }
-        return response
+        return self._get_response(Status.WARNING, 'Warning: {count}', '#ffaa44')
 
     def ok(self, i3s_output_list, i3s_config):
-        format = 'OK: {ok}'
+        return self._get_response(Status.OK, 'OK: {count}', '#44bb77')
+
+    def _get_response(self, state, format, color):
         response = {
-            'color': '#44bb77',
+            'color': color,
             'cached_until': time() + self.cache_timeout,
-            'full_text': format.format(ok=self._queryServiceCount(Status.OK))
+            'full_text': format.format(count=self._query_service_count(state))
         }
         return response
 
-    def _queryServiceCount(self, state):
+    def _query_service_count(self, state):
         if self.disable_acknowledge:
             self.url_parameters = self.url_parameters + "&service_handled=0"
         result = requests.get(
